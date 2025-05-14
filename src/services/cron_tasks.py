@@ -9,7 +9,7 @@ CRON_TASKS_CONFIG = [
     {
         'job': outreach_job,
         'account_task': True,
-        'cron_time': '0 */10 * * *',  # At minute 0 past every 10th hour.
+        'cron_time': '0 */1 * * *',  # At minute 0 past every 10th hour.
     },
 ]
 
