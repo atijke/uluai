@@ -7,6 +7,8 @@ load_dotenv()
 
 ENVIRONMENT_NAME = os.getenv('ENVIRONMENT_NAME')
 TELETHON_LOG_LEVEL = os.getenv('TELETHON_LOG_LEVEL', 'INFO')
+API_HOST = os.getenv('API_HOST', 'localhost')
+API_PORT = os.getenv('API_PORT', 8000)
 MONGO_URI = os.getenv('MONGO_URI')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 NGROK_DOMAIN = os.getenv('NGROK_DOMAIN', None)

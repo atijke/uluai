@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from api import api_router
-from config.env import NGROK_AUTHTOKEN, NGROK_DOMAIN, MONGO_URI
+from config.env import NGROK_AUTHTOKEN, NGROK_DOMAIN, API_HOST, API_PORT
 from repository.account import AccountRepository
 from services.accounts import run_account_process
 from common.db_types import AccountStatuses
@@ -26,7 +26,7 @@ app.add_middleware(
 async def tunnel():
     print(f"NGROK URL: https://{NGROK_DOMAIN}")
 
-    ngrok.forward(8000, authtoken_from_env=True, domain=NGROK_DOMAIN)
+    ngrok.forward(API_PORT, authtoken_from_env=True, domain=NGROK_DOMAIN)
 
     try:
         while True:
@@ -43,7 +43,7 @@ async def main():
 
     loop = asyncio.get_event_loop()
     rotation_event_pool_job_task = loop.create_task(rotation_event_pool_job())
-    config = uvicorn.Config(app=app, port=8000)
+    config = uvicorn.Config(app=app, host=API_HOST, port=API_PORT)
     server = uvicorn.Server(config)
 
     if NGROK_AUTHTOKEN:
