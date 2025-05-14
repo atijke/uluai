@@ -1,0 +1,7 @@
+src/.sessions
+src/.memory
+src/.env
+.env
+.venv
+.idea
+*.pyc

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:4.4
+    restart: unless-stopped
+    ports:
+      - ${MONGO_EXTERNAL_PORT}:27017
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    networks:
+      - app-network
+
+  app:
+    build:
+      dockerfile: app.Dockerfile
+    ports:
+      - ${APP_EXTERNAL_PORT}:8000
+    volumes:
+      - ./src/.sessions:/home/app/.sessions
+      - ./src/.memory:/home/app/.memory
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
