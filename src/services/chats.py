@@ -45,7 +45,10 @@ async def formatted_and_upsert_chat(
         }
 
         chat = await ChatRepository.find_and_update_one(
-            query={"telegram_id": chat_telegram_id},
+            query={
+                'account_telegram_id': formatted_chat["account_telegram_id"],
+                "telegram_id": formatted_chat['telegram_id']
+            },
             update={"$set": formatted_chat},
             upsert=True
         )

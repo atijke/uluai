@@ -31,7 +31,7 @@ class MemoryManager:
         )
         self.answer_model = OpenAI(
             model=self.account['llm_settings']['answer_model'],
-            temperature=0.9,
+            temperature=0.6,
             api_key=OPENAI_API_KEY
         )
 
