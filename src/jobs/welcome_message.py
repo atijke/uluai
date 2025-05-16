@@ -20,7 +20,7 @@ async def welcome_message_job():
             )
 
             for chat in chats:
-                subscription_cancel_link = f"https://{APP_DOMAIN}/subscriptions/{chat['subscription_id']}/cancel"
+                subscription_cancel_link = f"{APP_DOMAIN}/subscriptions/{chat['subscription_id']}/cancel"
 
                 await send_message_or_media(
                     client=process_vars.client,
