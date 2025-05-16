@@ -13,7 +13,7 @@ from jobs.rotation_event_pool import rotation_event_pool_job
 
 
 app = FastAPI(title="Subscription API")
-app.include_router(api_router, prefix='/api/v1')
+app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

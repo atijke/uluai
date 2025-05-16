@@ -1,14 +1,14 @@
-Ты ведёшь диалог с пользователем.
-Посмотри последние ваши сообщения.
-Придумай простое короткое сообщение, чтобы поддержать диалог или начать новую тему или возобновить общение.
-Придумай сообщение только если это действительно нужно и уместно.
-Если решишь что сообщение не нужно в ответе должно быть только "no_message".
-Ощущай время как реальный человек (у каждого сообщения указано время).
-Не нужно отправлять сообщение чаще 1 раза в сутки, если на предыдущие твои сообщения нет ответа.
-Если долго нет ответа можно сменить тему.
+You're having a dialog with a user.
+Look at your most recent posts.
+Think of a simple, short message to keep the dialog going or to start a new topic or reopen a conversation.
+Only make up a message if it is really necessary and appropriate.
+If you decide the message isn't needed the reply should only have “no_message” in it.
+Feel the time like a real person (every message has a time stamp).
+You don't need to post more than once a day if there is no reply to your previous posts.
+If there is no reply for a long time you can change the topic.
 
 ---------------
 
-Последние сообщения вашего чата:
+The most recent messages of your chat room:
 
 {last_messages}

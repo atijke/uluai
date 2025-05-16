@@ -60,8 +60,8 @@ class MemoryManager:
         if not last_messages:
             last_messages = []
 
-        relevant_messages_string = "\n".join([f"[{msg['timestamp']}][{'Ты' if msg['sender_telegram_id'] == self.account['telegram_id'] else msg['name']}]: {msg['text']}" for msg in relevant_messages])
-        last_messages_string = "\n".join([f"[{msg['timestamp']}][{'Ты' if msg['sender_telegram_id'] == self.account['telegram_id'] else msg['name']}]: {msg['text']}" for msg in last_messages])
+        relevant_messages_string = "\n".join([f"[{msg['timestamp']}][{'You' if msg['sender_telegram_id'] == self.account['telegram_id'] else msg['name']}]: {msg['text']}" for msg in relevant_messages])
+        last_messages_string = "\n".join([f"[{msg['timestamp']}][{'You' if msg['sender_telegram_id'] == self.account['telegram_id'] else msg['name']}]: {msg['text']}" for msg in last_messages])
 
         return (
             prompt

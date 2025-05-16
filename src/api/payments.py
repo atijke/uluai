@@ -1,4 +1,6 @@
 import traceback
+from pprint import pprint
+
 import stripe
 from fastapi import APIRouter
 from fastapi import Request
@@ -34,7 +36,8 @@ async def stripe_webhook(request: Request):
             },
             update={'$set': {
                 'subscription_active': True,
-                'welcome_message': False
+                'welcome_message': False,
+                'subscription_id': data['object']['id']
             }}
         )
 
@@ -47,11 +50,27 @@ async def stripe_webhook(request: Request):
         await ChatRepository.update_one(
             query={
                 'account_telegram_id': account_telegram_id,
-                'telegram_id': chat_telegram_id
+                'telegram_id': chat_telegram_id,
             },
-            update={'$set': {'subscription_active': False}}
+            update={
+                '$set': {
+                    'subscription_active': False,
+                },
+                '$unset': {
+                    'subscription_link': 1
+                }
+            }
         )
 
         print(f"Subscription deleted {chat_telegram_id} (account: {account_telegram_id})")
 
     return {'status': 'success'}
+
+
+@router.post("/subscriptions/{subscription_id}/cancel")
+async def cancel_subscription(
+        subscription_id: str
+):
+    stripe.Subscription.cancel(subscription_id)
+
+    return {'success': True}

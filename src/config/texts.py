@@ -5,5 +5,5 @@ def get_text(text: str, **kwargs):
     return text
 
 
-START_MESSAGE = 'Привет! Чтобы общаться со мной, оформи подписку ❤️\n\n<a href="{subscription_link}">ОФОРМИТЬ (50$/мес)</a>\n\nЯ напишу тебе сразу после оплаты!'
-WELCOME_MESSAGE = f'Подписка оформлена! Расскажи немного о себе 🙏'
+START_MESSAGE = 'Hi! To communicate with me, subscribe ❤️\n\n<a href="{subscription_link}">SUBSCRIBE ($50/month)</a>\n\nI\'ll send you a message right after you pay!'
+WELCOME_MESSAGE = 'Subscription is now open! You can unsubscribe at <a href="{subscription_cancel_link}">this link</a>. Tell me a little about yourself 🙏'
