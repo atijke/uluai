@@ -21,7 +21,6 @@ services:
     ports:
       - ${APP_EXTERNAL_PORT}:8000
     volumes:
-      - ./src:/home/app
       - ./src/.sessions:/home/app/.sessions
       - ./src/.memory:/home/app/.memory
     restart: unless-stopped
