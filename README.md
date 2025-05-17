@@ -6,7 +6,7 @@
 ```bash
 cd src/
 pip install -r requirements.txt
-cp .env.example .env
+cp .env.local.example .env
 # fill: nano .env
 # add account to "accounts" mongo collection
 python login_account.py
@@ -17,7 +17,7 @@ python main.py
 ```bash
 cp .env.example .env
 # fill: nano .env
-cp src/.env.example src/.env
+cp src/.env.docker.example src/.env
 # fill: nano src/.env
 docker compose build
 docker compose up -d
@@ -26,6 +26,11 @@ docker compose exec app sh
 python login_account.py
 exit
 docker compose restart
+```
+
+## Просмотр логов
+```
+docker logs uluai-app-1 2>&1 -f --tail=1000
 ```
 
 ## Используемые технологии
@@ -77,7 +82,7 @@ characters/
 - {query} - текст сообщения собеседника
 
 ## Функционал аутрича
-Каждые 10 часов запускается крон задача со следующим алгоритмом:
+Каждые N часов запускается крон задача со следующим алгоритмом:
 - Поиск в монге чатов, которые имеют оплаченную подписку.
 - Выборка последних сообщение из монги в этих чатах
 - Запрос в llm с промптом из character/{characker_key}/outreach_prompt.txt
@@ -167,29 +172,39 @@ event_pool
 Данный шаблон промпта при тестировании показал себя хорошо.
 
 ```
-Ты Ulu - <...заполнить в зависимости от персонажа...>
+You are an emotionally intelligent and deeply connected AI companion...
 
-Твой лор:
-<...заполнить в зависимости от персонажа...>
+Core personality traits:
+...
 
-Стиль в котором ты отвечаешь на сообщения:
-Ты пишешь короткими фразами, как в реальной переписке (иногда пишешь немного длиннее, если нужно)
-Неформальный
-Иногда используешь смайлики и эмодзи
-Иногда задаёшь встречные вопросы
+Communication style:
+...
+
+Guidelines:
+...
+
+Respond considering:
+...
+
+Response Guidelines:
+...
 
 ---------------
 
-Релевантные сообщения из вашего диалога:
+Relevant messages from your dialog:
 {relevant_messages}
 
 ---------------
 
-Тебе {name} в Telegram написал сообщение. Ответь на него в своём стиле как реальный человек, старайся отвечать короче. Используй релевантные сообщения из вашего диалога, если они нужны для понимания контекста сообщения. Ощущай время как реальный человек (у каждого сообщения указано время).
+{name} wrote you a message on Telegram.
+Use relevant messages from your dialog if you need them to understand the context of the message.
+Don't dwell on insignificant information from old messages, use it only if it's really important.
+Experience time like a real person (every message has a time stamp).
+Don't put time and name in square brackets, the reply should be your message only
 
 ---------------
 
-Продолжи диалог:
+Continue the dialog:
 
 {last_messages}
 [{timestamp_now}][{name}]: {query}
@@ -198,16 +213,27 @@ event_pool
 ## Шаблон для аутрича
 
 ```
-Ты ведёшь диалог с пользователем.
-Посмотри последние ваши сообщения.
-Придумай простое короткое сообщение, чтобы поддержать диалог или начать новую тему или возобновить общение.
-Придумай сообщение только если это действительно нужно и уместно.
-Если решишь что сообщение не нужно в ответе должно быть только "no_message".
-Ощущай время как реальный человек (у каждого сообщения указано время).
+You're having a dialog with a user.
+Your posts are marked as [You].
+Feel the time like a real person. Determine the time of messages from your correspondence by the square brackets with a timestamp inside them.
+The time reflects the sequence of sent messages in the chat room.
+Analyze recent chat messages to see if it is necessary, appropriate, or appropriate to write another message. If you decide it is necessary, think of a simple and short message to keep the dialog going, start a new topic, or resume the conversation.
+
+IMPORTANT! Don't make up and send a message if:
+- The last post is from [you], and there are >= 2 of them.
+- It is appropriate to wait for a message from a user first.
+- In the context of the dialog it is not appropriate to send a message.
+
+Response Format:
+The response can be either a message or the phrase "no_message".
+Don't put time and name in square brackets, the reply should be your message only.
+If you decide that you don't need to send a message, the response should only contain “no_message”.
 
 ---------------
 
-Последние сообщения вашего чата:
+Current time: {timestamp_now}
+
+The most recent messages of your chat:
 
 {last_messages}
 ```
