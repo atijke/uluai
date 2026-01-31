@@ -107,7 +107,7 @@ accounts
   "status": "new",
   "llm_settings": {
     "embed_model": "text-embedding-3-small",
-    "answer_model": "gpt-4.1-mini",
+    "answer_model": "gpt-5.2",
     "character": "ulu"
   }
 }
